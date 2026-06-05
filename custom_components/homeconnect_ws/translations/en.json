@@ -1035,6 +1035,12 @@
        "sensor_dispenser_ice_hopper_presence": {
          "name": "Ice Hopper Presence"
        },
+       "sensor_temperature_ambient_fridge": {
+         "name": "Fridge Temperature"
+       },
+       "sensor_temperature_ambient_freezer": {
+         "name": "Freezer Temperature"
+       },
       "sensor_laundry_status_idos1_fill_level": {
         "name": "i-DOS 1 Fill Level",
         "state": {
