@@ -211,6 +211,18 @@ REFRIGERATION_ENTITY_DESCRIPTIONS: _EntityDescriptionsDefinitionsType = {
             native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         ),
         HCSensorEntityDescription(
+            key="sensor_temperature_ambient_fridge",
+            entity="Refrigeration.Common.Status.Compartment1.TemperatureFahrenheit",
+            device_class=SensorDeviceClass.TEMPERATURE,
+            native_unit_of_measurement=UnitOfTemperature.FAHRENHEIT,
+        ),
+        HCSensorEntityDescription(
+            key="sensor_temperature_ambient_freezer",
+            entity="Refrigeration.Common.Status.Compartment2.TemperatureFahrenheit",
+            device_class=SensorDeviceClass.TEMPERATURE,
+            native_unit_of_measurement=UnitOfTemperature.FAHRENHEIT,
+        ),
+        HCSensorEntityDescription(
             key="sensor_temperature_memory_freezer",
             entity="Refrigeration.Common.Status.Freezer.MemoryTemperature",
             device_class=SensorDeviceClass.TEMPERATURE,
