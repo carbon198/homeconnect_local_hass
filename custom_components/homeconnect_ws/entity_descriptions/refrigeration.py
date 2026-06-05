@@ -10,7 +10,6 @@ from homeassistant.const import PERCENTAGE, EntityCategory, UnitOfTemperature
 
 from .descriptions_definitions import (
     HCBinarySensorEntityDescription,
-    HCLightEntityDescription,
     HCNumberEntityDescription,
     HCSelectEntityDescription,
     HCSensorEntityDescription,
@@ -54,6 +53,7 @@ REFRIGERATION_ENTITY_DESCRIPTIONS: _EntityDescriptionsDefinitionsType = {
             key="binary_sensor_freezer_door_state",
             entity="Refrigeration.FridgeFreezer.Status.DoorFreezer",
             device_class=BinarySensorDeviceClass.DOOR,
+            entity_registry_enabled_default=False,
             value_on={"Open"},
             value_off={"Closed"},
         ),
@@ -61,6 +61,7 @@ REFRIGERATION_ENTITY_DESCRIPTIONS: _EntityDescriptionsDefinitionsType = {
             key="binary_sensor_fridge_door_state",
             entity="Refrigeration.FridgeFreezer.Status.DoorRefrigerator",
             device_class=BinarySensorDeviceClass.DOOR,
+            entity_registry_enabled_default=False,
             value_on={"Open"},
             value_off={"Closed"},
         ),
@@ -162,6 +163,38 @@ REFRIGERATION_ENTITY_DESCRIPTIONS: _EntityDescriptionsDefinitionsType = {
             value_on={"Present", "Confirmed"},
             value_off={"Off"},
         ),
+        HCBinarySensorEntityDescription(
+            key="binary_sensor_dispenser_ice_hopper_empty",
+            entity="Refrigeration.Common.Event.Dispenser.EmptyIceHopper",
+            entity_category=EntityCategory.DIAGNOSTIC,
+            device_class=BinarySensorDeviceClass.PROBLEM,
+            value_on={"Present", "Confirmed"},
+            value_off={"Off"},
+        ),
+        HCBinarySensorEntityDescription(
+            key="binary_sensor_dispenser_ice_expired",
+            entity="Refrigeration.Common.Event.Dispenser.IceExpired",
+            entity_category=EntityCategory.DIAGNOSTIC,
+            device_class=BinarySensorDeviceClass.PROBLEM,
+            value_on={"Present", "Confirmed"},
+            value_off={"Off"},
+        ),
+        HCBinarySensorEntityDescription(
+            key="binary_sensor_dispenser_water_expired",
+            entity="Refrigeration.Common.Event.Dispenser.WaterExpired",
+            entity_category=EntityCategory.DIAGNOSTIC,
+            device_class=BinarySensorDeviceClass.PROBLEM,
+            value_on={"Present", "Confirmed"},
+            value_off={"Off"},
+        ),
+        HCBinarySensorEntityDescription(
+            key="binary_sensor_dispenser_water_filter_almost_full",
+            entity="Refrigeration.Common.Event.Dispenser.WaterFilterAlmostFull",
+            entity_category=EntityCategory.DIAGNOSTIC,
+            device_class=BinarySensorDeviceClass.PROBLEM,
+            value_on={"Present", "Confirmed"},
+            value_off={"Off"},
+        ),
     ],
     "sensor": [
         HCSensorEntityDescription(
@@ -169,6 +202,7 @@ REFRIGERATION_ENTITY_DESCRIPTIONS: _EntityDescriptionsDefinitionsType = {
             entity="Refrigeration.FridgeFreezer.Status.TemperatureAmbient",
             device_class=SensorDeviceClass.TEMPERATURE,
             native_unit_of_measurement=UnitOfTemperature.CELSIUS,
+            entity_registry_enabled_default=False,
         ),
         HCSensorEntityDescription(
             key="sensor_temperature_ambient",
@@ -183,6 +217,17 @@ REFRIGERATION_ENTITY_DESCRIPTIONS: _EntityDescriptionsDefinitionsType = {
             native_unit_of_measurement=UnitOfTemperature.CELSIUS,
             entity_registry_enabled_default=False,
         ),
+        HCSensorEntityDescription(
+            key="sensor_dispenser_water_filter_saturation",
+            entity="Refrigeration.Common.Status.Dispenser.WaterFilterSaturation",
+            native_unit_of_measurement=PERCENTAGE,
+            icon="mdi:water-filter",
+        ),
+        HCSensorEntityDescription(
+            key="sensor_dispenser_ice_hopper_presence",
+            entity="Refrigeration.Common.Status.Dispenser.IceHopperPresence",
+            icon="mdi:ice-cream",
+        ),
     ],
     "number": [
         HCNumberEntityDescription(
@@ -192,6 +237,7 @@ REFRIGERATION_ENTITY_DESCRIPTIONS: _EntityDescriptionsDefinitionsType = {
             device_class=NumberDeviceClass.TEMPERATURE,
             mode=NumberMode.AUTO,
             step=1,
+            entity_registry_enabled_default=False,
         ),
         HCNumberEntityDescription(
             key="number_setpoint_refrigerator",
@@ -200,6 +246,7 @@ REFRIGERATION_ENTITY_DESCRIPTIONS: _EntityDescriptionsDefinitionsType = {
             device_class=NumberDeviceClass.TEMPERATURE,
             mode=NumberMode.AUTO,
             step=1,
+            entity_registry_enabled_default=False,
         ),
         HCNumberEntityDescription(
             key="number_setpoint_freezer",
@@ -262,6 +309,13 @@ REFRIGERATION_ENTITY_DESCRIPTIONS: _EntityDescriptionsDefinitionsType = {
             native_unit_of_measurement=PERCENTAGE,
             mode=NumberMode.AUTO,
             step=1,
+        ),
+        HCNumberEntityDescription(
+            key="number_dispenser_bottle_fill_quantity",
+            entity="Refrigeration.Common.Setting.Dispenser.BottleFillQuantity",
+            native_unit_of_measurement="ml",
+            mode=NumberMode.AUTO,
+            step=50,
         ),
     ],
     "switch": [
@@ -387,16 +441,11 @@ REFRIGERATION_ENTITY_DESCRIPTIONS: _EntityDescriptionsDefinitionsType = {
             entity_registry_enabled_default=False,
             has_state_translation=True,
         ),
-    ],
-    "light": [
-        HCLightEntityDescription(
-            key="light_internal",
-            entity="Refrigeration.Common.Setting.Light.Internal.Power",
-        ),
-        HCLightEntityDescription(
-            key="light_logo",
-            entity="Refrigeration.Common.Setting.Light.Logo.Power",
-            entity_category=EntityCategory.CONFIG,
+        HCSelectEntityDescription(
+            key="select_dispenser_function",
+            entity="Refrigeration.Common.Setting.Dispenser.Function",
+            device_class=SensorDeviceClass.ENUM,
+            has_state_translation=True,
         ),
     ],
 }
